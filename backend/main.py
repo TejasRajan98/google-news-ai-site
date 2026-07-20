@@ -224,19 +224,19 @@ def fetch_google_news(topic: str = None):
     if topic:
         topic_upper = topic.upper().strip()
         if topic_upper == "INDIA":
-            url = "https://news.google.com/rss/search?q=India+news&hl=en-IN&gl=IN&ceid=IN:en"
+            url = "https://news.google.com/rss/search?q=India&hl=en-IN&gl=IN&ceid=IN:en"
         elif topic_upper == "WORLD":
-            url = "https://news.google.com/rss/search?q=world+news&hl=en-US&gl=US&ceid=US:en"
+            url = "https://news.google.com/rss/search?q=world&hl=en-US&gl=US&ceid=US:en"
         elif topic_upper in ["BUSINESS", "BIZ"]:
-            url = "https://news.google.com/rss/search?q=business+news&hl=en-US&gl=US&ceid=US:en"
+            url = "https://news.google.com/rss/search?q=business&hl=en-US&gl=US&ceid=US:en"
         elif topic_upper in ["TECHNOLOGY", "TECH"]:
-            url = "https://news.google.com/rss/search?q=technology+news&hl=en-US&gl=US&ceid=US:en"
+            url = "https://news.google.com/rss/search?q=technology&hl=en-US&gl=US&ceid=US:en"
         elif topic_upper in ["SPORTS", "SPORT"]:
-            url = "https://news.google.com/rss/search?q=sports+news&hl=en-US&gl=US&ceid=US:en"
+            url = "https://news.google.com/rss/search?q=sports&hl=en-US&gl=US&ceid=US:en"
         elif topic_upper == "SCIENCE":
-            url = "https://news.google.com/rss/search?q=science+news&hl=en-US&gl=US&ceid=US:en"
+            url = "https://news.google.com/rss/search?q=science&hl=en-US&gl=US&ceid=US:en"
         elif topic_upper == "HEALTH":
-            url = "https://news.google.com/rss/search?q=health+news&hl=en-US&gl=US&ceid=US:en"
+            url = "https://news.google.com/rss/search?q=health&hl=en-US&gl=US&ceid=US:en"
         else:
             url = "https://news.google.com/rss/search?q=news&hl=en-US&gl=US&ceid=US:en"
     else:
@@ -251,7 +251,7 @@ def fetch_google_news(topic: str = None):
             url, 
             headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
         )
-        with urllib.request.urlopen(req, timeout=2.0) as response:
+        with urllib.request.urlopen(req, timeout=2.5) as response:
             if response.status == 200:
                 xml_data = response.read()
     except Exception as e:
@@ -266,7 +266,7 @@ def fetch_google_news(topic: str = None):
                 proxy_url, 
                 headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
             )
-            with urllib.request.urlopen(req, timeout=2.0) as response:
+            with urllib.request.urlopen(req, timeout=3.0) as response:
                 xml_data = response.read()
         except Exception as e:
             print(f"Proxy 1 (cors.lol) failed: {e}")
@@ -281,7 +281,7 @@ def fetch_google_news(topic: str = None):
                 proxy_url, 
                 headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
             )
-            with urllib.request.urlopen(req, timeout=2.5) as response:
+            with urllib.request.urlopen(req, timeout=3.0) as response:
                 json_res = json.loads(response.read().decode('utf-8'))
                 contents = json_res.get("contents", "")
                 if contents:
