@@ -220,18 +220,18 @@ FALLBACK_DATABASE = {
 
 
 def fetch_google_news(topic: str = None):
-    # Search-based mapping to bypass Geo-IP blocks/503 limits on GCP datacenters
+    # Search-based mapping to bypass Geo-IP blocks/503 limits on datacenter IPs
     if topic:
         topic_upper = topic.upper().strip()
         if topic_upper == "INDIA":
             url = "https://news.google.com/rss/search?q=India+news&hl=en-IN&gl=IN&ceid=IN:en"
         elif topic_upper == "WORLD":
             url = "https://news.google.com/rss/search?q=world+news&hl=en-US&gl=US&ceid=US:en"
-        elif topic_upper == "BUSINESS":
+        elif topic_upper in ["BUSINESS", "BIZ"]:
             url = "https://news.google.com/rss/search?q=business+news&hl=en-US&gl=US&ceid=US:en"
-        elif topic_upper == "TECHNOLOGY":
+        elif topic_upper in ["TECHNOLOGY", "TECH"]:
             url = "https://news.google.com/rss/search?q=technology+news&hl=en-US&gl=US&ceid=US:en"
-        elif topic_upper == "SPORTS":
+        elif topic_upper in ["SPORTS", "SPORT"]:
             url = "https://news.google.com/rss/search?q=sports+news&hl=en-US&gl=US&ceid=US:en"
         elif topic_upper == "SCIENCE":
             url = "https://news.google.com/rss/search?q=science+news&hl=en-US&gl=US&ceid=US:en"
@@ -245,18 +245,31 @@ def fetch_google_news(topic: str = None):
     xml_data = None
     parsed_articles = None
 
-    # Step 1: Try api.cors.lol proxy (Raw XML, Real-time)
+    # Step 0: Try direct RSS fetch (Fastest on Vercel/AWS non-GCP IPs, ~200ms)
     try:
-        encoded_url = urllib.parse.quote(url, safe='')
-        proxy_url = f"https://api.cors.lol/?url={encoded_url}"
         req = urllib.request.Request(
-            proxy_url, 
+            url, 
             headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
         )
-        with urllib.request.urlopen(req, timeout=4.0) as response:
-            xml_data = response.read()
+        with urllib.request.urlopen(req, timeout=2.0) as response:
+            if response.status == 200:
+                xml_data = response.read()
     except Exception as e:
-        print(f"Proxy 1 (cors.lol) failed: {e}")
+        print(f"Step 0 (Direct RSS) failed or rate-limited: {e}")
+
+    # Step 1: Try api.cors.lol proxy (Raw XML, Real-time)
+    if not xml_data:
+        try:
+            encoded_url = urllib.parse.quote(url, safe='')
+            proxy_url = f"https://api.cors.lol/?url={encoded_url}"
+            req = urllib.request.Request(
+                proxy_url, 
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+            )
+            with urllib.request.urlopen(req, timeout=2.0) as response:
+                xml_data = response.read()
+        except Exception as e:
+            print(f"Proxy 1 (cors.lol) failed: {e}")
 
     # Step 2: Try api.allorigins.win JSON proxy (JSON wrapped XML, Real-time)
     if not xml_data:
@@ -268,7 +281,7 @@ def fetch_google_news(topic: str = None):
                 proxy_url, 
                 headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
             )
-            with urllib.request.urlopen(req, timeout=5.0) as response:
+            with urllib.request.urlopen(req, timeout=2.5) as response:
                 json_res = json.loads(response.read().decode('utf-8'))
                 contents = json_res.get("contents", "")
                 if contents:
@@ -285,7 +298,7 @@ def fetch_google_news(topic: str = None):
                 proxy_url, 
                 headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
             )
-            with urllib.request.urlopen(req, timeout=4.0) as response:
+            with urllib.request.urlopen(req, timeout=2.0) as response:
                 xml_data = response.read()
         except Exception as e:
             print(f"Proxy 3 (Codetabs) failed: {e}")
@@ -300,7 +313,7 @@ def fetch_google_news(topic: str = None):
                 proxy_url, 
                 headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
             )
-            with urllib.request.urlopen(req, timeout=3.0) as response:
+            with urllib.request.urlopen(req, timeout=2.0) as response:
                 json_res = json.loads(response.read().decode('utf-8'))
                 if json_res.get("status") == "ok":
                     parsed_articles = []
