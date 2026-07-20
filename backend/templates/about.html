@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Google News AI Aggregator</title>
+  <meta name="description" content="Learn more about our mission to track Google's advancements across Artificial Intelligence, Cloud Scale, and hardware architectures.">
+  <link rel="stylesheet" href="/static/css/style.css?v=3">
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="/" class="logo" id="site-logo">
+        <span class="logo-g">G</span>
+        <span class="logo-o1">o</span>
+        <span class="logo-o2">o</span>
+        <span class="logo-g2">g</span>
+        <span class="logo-l">l</span>
+        <span class="logo-e">e</span>
+        <span class="logo-tag">News AI</span>
+      </a>
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link" id="nav-home">Home</a></li>
+          <li><a href="/about" class="nav-link active" id="nav-about">About</a></li>
+          <li><a href="/contact" class="nav-link" id="nav-contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <section class="about-section">
+      <!-- Text Content -->
+      <div class="about-text">
+        <h2>Unifying Google's Tech Universe</h2>
+        <p>Welcome to the Google News AI Aggregator. Our mission is to compile, categorize, and synthesize the fast-paced ecosystem updates released by Google. From massive transformer model breakthroughs to hardware silicon shifts, we provide a clean, noise-free feed of what truly matters.</p>
+        
+        <p>In addition to serving as a news dashboard, we have integrated a conversational AI assistant. Powered by mock agent logic, it responds to complex tech queries, helping you retrieve information regarding Gemini integrations, Pixel benchmarks, and Cloud Vertex builder pipelines instantly.</p>
+
+        <!-- Feature Grid -->
+        <div class="about-features">
+          <div class="feature-item">
+            <h3>AI Focus</h3>
+            <p>We trace advancements in Large Language Models, visual reasoning networks, and agentic integrations.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Hardware Ecosystem</h3>
+            <p>Direct tracking of Pixel smartphones, Custom Tensor G-series TPU silicon, and IoT designs.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Enterprise Cloud</h3>
+            <p>Enterprise solutions overview covering Vertex AI, Kubernetes engines, and database systems.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Platform Systems</h3>
+            <p>Under-the-hood details regarding Android APIs, Chrome Engine, and Web Platform Standards.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Illustration Area -->
+      <div class="about-illustration">
+        <div class="about-img-box">
+          <div class="ai-icon-g">AI</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Persistent Floating Chatbot -->
+  <div class="chatbot-widget" id="chatbot-widget">
+    <!-- Toggle Button -->
+    <button class="chatbot-trigger" id="chat-trigger" aria-label="Open AI Chatbot">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+
+    <!-- Chat Box Window -->
+    <div class="chat-window" id="chat-window" aria-label="AI Chat Assistant">
+      <!-- Chat Header -->
+      <div class="chat-header">
+        <div class="chat-header-info">
+          <div class="chat-avatar">🤖</div>
+          <div class="chat-title-text">
+            <h3>Google News Assistant</h3>
+            <p>Online | Powered by AI</p>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <button id="chat-close" aria-label="Close Chat">&times;</button>
+        </div>
+      </div>
+
+      <!-- Chat History -->
+      <div class="chat-history" id="chat-history">
+        <!-- Messages appended dynamically -->
+        
+        <!-- Bouncing Typing Indicator -->
+        <div class="typing-indicator" id="typing-indicator">
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input Area -->
+      <div class="chat-footer">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Ask about Gemini, Pixel, Cloud..." aria-label="Type message">
+        <button class="chat-send-btn" id="chat-send-btn" aria-label="Send message">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Google News AI Aggregator. Created by Tejas Rajan.</p>
+      <div class="footer-links">
+        <a href="/" class="footer-link">Home</a>
+        <a href="/about" class="footer-link">About</a>
+        <a href="/contact" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/js/main.js?v=2"></script>
+  <script src="/static/js/chatbot.js"></script>
+</body>
+</html>
